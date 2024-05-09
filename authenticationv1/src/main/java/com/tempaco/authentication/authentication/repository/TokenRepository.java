@@ -1,4 +1,3 @@
-
 package com.tempaco.authentication.authentication.repository;
 
 import java.util.List;
@@ -12,16 +11,15 @@ import com.tempaco.authentication.authentication.model.Token;
 
 @Repository
 public interface TokenRepository extends JpaRepository<Token, Long> {
-	
-	@Query("""
-	        select t from Token t where t.token like concat(:token, '%')
-	        """)
-	Optional<Token> findByToken(String token);
-	@Query("""
-			select t from Token t inner join User u on t.user.id =u.id
-			where u.id=:userId and (t.expired = false or t.revoked = false)
-			""")
-	List<Token> findAllValidTokenByUser(Long userId);
-
-
+    
+    @Query("""
+            select t from Token t where t.token ilike concat(:token, '%')
+            """)
+    Optional<Token> findByToken(String token);
+    
+    @Query("""
+            select t from Token t inner join t.user u
+            where u.id = :userId and (t.expired = false or t.revoked = false)
+            """)
+    List<Token> findAllValidTokenByUser(Long userId);
 }
