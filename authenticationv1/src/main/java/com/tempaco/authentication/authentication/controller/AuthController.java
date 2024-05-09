@@ -1,4 +1,5 @@
 package com.tempaco.authentication.authentication.controller;
+
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,14 +17,14 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class AuthController {
-	
+
 	private final AuthenticationService authenticationService;
-	
+
 	@PostMapping("/signup")
-	public JwtAuthenticationResponse signup(@RequestBody SignUpRequest signUpRequest ) {
+	public JwtAuthenticationResponse signup(@RequestBody SignUpRequest signUpRequest) {
 		return authenticationService.signup(signUpRequest);
 	}
-	
+
 	@PostMapping("/signin")
 	public JwtAuthenticationResponse signin(@RequestBody SignInRequestDto signInRequestDto) {
 		return authenticationService.signin(signInRequestDto);

@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.*;
 
-
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,6 +47,9 @@ public class User implements UserDetails {
 
 	@Enumerated(EnumType.STRING)
 	Role role;
+
+	@OneToMany(mappedBy = "user")
+	private List<Token> tokens;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
