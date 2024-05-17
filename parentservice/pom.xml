@@ -19,6 +19,7 @@
 	<modules>
 		<module>authentication</module>
 		<module>user-service</module>
+		<module>Property_Service</module>
 	</modules>
 
 	<build>
