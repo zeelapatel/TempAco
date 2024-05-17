@@ -18,8 +18,13 @@
 	</properties>
 	<modules>
 		<module>authentication</module>
+<<<<<<< Updated upstream
 		<module>user-service</module>
 		<module>Property_Service</module>
+=======
+		<module>property-service</module>
+		<module>message-service</module>
+>>>>>>> Stashed changes
 	</modules>
 
 	<build>

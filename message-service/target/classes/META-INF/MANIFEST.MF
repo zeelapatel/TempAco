@@ -1,6 +1,10 @@
 Manifest-Version: 1.0
 Build-Jdk-Spec: 17
+<<<<<<<< Updated upstream:message-service/target/classes/META-INF/MANIFEST.MF
 Implementation-Title: message-service
+========
+Implementation-Title: property-service
+>>>>>>>> Stashed changes:parentservice/property-service/target/classes/META-INF/MANIFEST.MF
 Implementation-Version: 0.0.1-SNAPSHOT
 Created-By: Maven Integration for Eclipse
 

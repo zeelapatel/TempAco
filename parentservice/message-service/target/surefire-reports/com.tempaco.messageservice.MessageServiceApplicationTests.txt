@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.tempaco.messageservice.MessageServiceApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.247 s -- in com.tempaco.messageservice.MessageServiceApplicationTests
