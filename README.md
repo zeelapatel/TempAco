@@ -1,4 +1,4 @@
-# International Student Accommodation Finder - 
+# International Student Accommodation Finder 
 > _not a project its a product_
 ## Welcome to the International Student Accommodation Finder, a platform designed to help international students find temporary accommodation near their universities and connect with each other. This project is built with a Java Spring Boot backend and a React frontend, with PostgreSQL as the database.
 
