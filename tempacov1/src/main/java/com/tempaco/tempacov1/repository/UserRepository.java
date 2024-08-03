@@ -10,4 +10,5 @@ import com.tempaco.tempacov1.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User>  findByEmail(String email);
     Optional<User>  findById(Long id);
+    User findUserByEmail(String email);
 }
