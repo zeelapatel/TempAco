@@ -63,7 +63,6 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-data-jdbc</artifactId>
 	</dependency>
->>>>>>> Stashed changes
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
