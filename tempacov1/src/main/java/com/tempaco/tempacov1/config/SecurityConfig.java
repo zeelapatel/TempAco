@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.tempaco.tempacov1.filter.JwtAuthenticationFilter;
 import com.tempaco.tempacov1.service.UserService;
@@ -29,41 +30,44 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
-	  private final UserService userService;
-	  private final PasswordEncoder passwordEncoder;
-	  private final LogoutHandler logoutHandler;
-	  
-	  @Bean
-	  public AuthenticationProvider authenticationProvider() {
-	      DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	      authProvider.setUserDetailsService(userService.userDetailsService());
-	      authProvider.setPasswordEncoder(passwordEncoder);
-	      return authProvider;
-	  }
+	private final UserService userService;
+	private final PasswordEncoder passwordEncoder;
+	private final LogoutHandler logoutHandler;
 
-	  @Bean
-	  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-	      return config.getAuthenticationManager();
-	  }
-	  
-	  @Bean
-	  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-          http
-                  .csrf(csrf -> csrf
-                                  .disable()
-                  )
-                  .sessionManagement(session -> session
-                                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                  )
-                  .authorizeHttpRequests(authorize -> authorize
-                                  .requestMatchers(HttpMethod.POST, "/api/v1/signup", "/api/v1/signin").permitAll()
-                                  .requestMatchers(HttpMethod.GET, "/api/v1/test/**").permitAll()
-                                  .anyRequest().authenticated()
-                  )
-                  .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                  .logout(logout -> logout.addLogoutHandler(logoutHandler).logoutUrl("/api/v1/logout").logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()))
-	    ;
-
-	    return http.build();
-	  }
+	@Bean
+	public AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userService.userDetailsService());
+		authProvider.setPasswordEncoder(passwordEncoder);
+		return authProvider;
 	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.disable())
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(
+						authorize -> authorize.requestMatchers(HttpMethod.POST, "/api/v1/signup", "/api/v1/signin")
+								.permitAll().requestMatchers(HttpMethod.GET, "/api/v1/test/**").permitAll()
+								.requestMatchers(HttpMethod.GET, "/", "/index.html", "/static/**", "/css/**", "/js/**",
+										"/images/**")
+								.permitAll() // Allow access to static resources
+								.requestMatchers("/users/me").permitAll()
+								.requestMatchers("/api/v1/signin").permitAll()
+								.anyRequest().authenticated())
+				.authenticationProvider(authenticationProvider())
+				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+				.logout(logout -> logout.addLogoutHandler(logoutHandler).logoutUrl("/api/v1/logout")
+						.logoutSuccessHandler(
+								(request, response, authentication) -> SecurityContextHolder.clearContext()));
+
+		return http.build();
+	}
+	
+	
+}

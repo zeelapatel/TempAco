@@ -46,6 +46,14 @@ public class UserService {
         }
         return Optional.empty();
     }
+	
+	
+	public Optional<User> getUserByEmail(String email){
+		if (email != null) {
+            return userRepository.findByEmail(email);
+        }
+        return Optional.empty();
+	}
 
 	public UserResponseDto updateUserInformation(String userEmail, UserResponseDto userResponseDto) {
 		
