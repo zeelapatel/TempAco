@@ -9,6 +9,7 @@ import lombok.*;
 @Data
 @Getter
 @Setter
+@ToString(exclude = "user")
 public class Property {
 
     @Id
@@ -22,5 +23,10 @@ public class Property {
 
     @Lob
     private byte[] photo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 }
