@@ -2,6 +2,7 @@ package com.tempaco.tempacov1.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 @Entity
 @AllArgsConstructor
@@ -9,6 +10,8 @@ import lombok.*;
 @Data
 @Getter
 @Setter
+@Builder
+@ToString(exclude = "user")
 public class Property {
 
     @Id
@@ -20,7 +23,11 @@ public class Property {
     private String zip;
     private double price;
 
-    @Lob
     private byte[] photo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 }
