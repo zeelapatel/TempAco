@@ -30,48 +30,64 @@ public class UserController {
 	private final UserService userService;
 
 	// Get User endpoint By userId
-	
+
 	@GetMapping("/users/{userId}")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<UserResponseDto> getUserById(@PathVariable("userId") Long userId) {
-        if (userId != null) {
-            Optional<User> userEntity = userService.getUserById(userId);
-            if (userEntity.isPresent()) {
-                UserResponseDto userResponseDto = mapToUserResponseDto(userEntity.get());
-                return ResponseEntity.ok(userResponseDto);
-            } else {
-                return ResponseEntity.notFound().build(); // Or return an appropriate error response
-            }
-        } else {
-            return ResponseEntity.badRequest().build(); // Or return an appropriate error response
-        }
-    }
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<UserResponseDto> getUserById(@PathVariable("userId") Long userId) {
+		if (userId != null) {
+			Optional<User> userEntity = userService.getUserById(userId);
+			if (userEntity.isPresent()) {
+				UserResponseDto userResponseDto = mapToUserResponseDto(userEntity.get());
+				return ResponseEntity.ok(userResponseDto);
+			} else {
+				return ResponseEntity.notFound().build(); // Or return an appropriate error response
+			}
+		} else {
+			return ResponseEntity.badRequest().build(); // Or return an appropriate error response
+		}
+	}
 
-    private UserResponseDto mapToUserResponseDto(User user) {
-        return UserResponseDto.builder()
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .email(user.getEmail())
-                .build();
-    }
-    
-    //update user informattion endpoint
-    
-    @PutMapping("/users/updateUserInfo")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<UserResponseDto> updateUserInformation( @RequestBody UserResponseDto userResponseDto){
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
+	private UserResponseDto mapToUserResponseDto(User user) {
+		return UserResponseDto.builder().firstName(user.getFirstName()).lastName(user.getLastName())
+				.email(user.getEmail()).build();
+	}
 
-    	UserResponseDto updatedUser = userService.updateUserInformation(userEmail,userResponseDto);
-    	 if (updatedUser != null) {
-             return ResponseEntity.ok(updatedUser);
-         } else {
-             return ResponseEntity.notFound().build(); // Or return an appropriate error response
-         }
-    
-    }
-    
-    
-    
+	// update user informattion endpoint
+
+	@PutMapping("/users/updateUserInfo")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<UserResponseDto> updateUserInformation(@RequestBody UserResponseDto userResponseDto) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userEmail = authentication.getName();
+
+		UserResponseDto updatedUser = userService.updateUserInformation(userEmail, userResponseDto);
+		if (updatedUser != null) {
+			return ResponseEntity.ok(updatedUser);
+		} else {
+			return ResponseEntity.notFound().build(); // Or return an appropriate error response
+		}
+
+	}
+
+	@GetMapping("/users/me")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<UserResponseDto> getCurrentUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated()) {
+			String userEmail = authentication.getName();
+
+			
+			Optional<User> userEntity = userService.getUserByEmail(userEmail);
+			if (userEntity.isPresent()) {
+				UserResponseDto userResponseDto = mapToUserResponseDto(userEntity.get());
+				return ResponseEntity.ok(userResponseDto);
+			} else {
+				return ResponseEntity.notFound().build(); // Or return an appropriate error response
+			}
+
+		} else {
+			return ResponseEntity.badRequest().build(); // Or return an appropriate error response
+		}
+	}
+
 }

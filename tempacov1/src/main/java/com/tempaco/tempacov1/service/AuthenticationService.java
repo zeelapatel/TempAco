@@ -36,7 +36,7 @@ public class AuthenticationService {
 		var jwt = jwtService.generateToken(user);
 		revokeAllToken(user);
 		saveUserToken(user, jwt);
-		return JwtAuthenticationResponse.builder().token(jwt).build();
+		return JwtAuthenticationResponse.builder().token(jwt).email(user.getEmail()).firstName(user.getFirstName()).lastName(user.getLastName()).build();
 	}
 
 	public JwtAuthenticationResponse signin(SignInRequestDto request) {
@@ -47,7 +47,11 @@ public class AuthenticationService {
 		var jwt = jwtService.generateToken(user);
 		revokeAllToken(user);
 		saveUserToken(user, jwt);
-		return JwtAuthenticationResponse.builder().token(jwt).build();
+
+
+
+
+		return JwtAuthenticationResponse.builder().token(jwt).email(user.getEmail()).firstName(user.getFirstName()).lastName(user.getLastName()).build();
 	}
 
 	private void revokeAllToken(User user){

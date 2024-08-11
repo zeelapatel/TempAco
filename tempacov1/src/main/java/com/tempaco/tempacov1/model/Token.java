@@ -22,7 +22,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @Builder
-@ToString
+@ToString(exclude = "user")
 @Table(name = "token")
 public class Token {
 
