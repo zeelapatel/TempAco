@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
+import java.util.Date;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +23,11 @@ public class Property {
     private String description;
     private String address;
     private String zip;
-    private double price;
+    private Double price;
+    private Integer bed;
+    private Double bath;
+    private Date moveInDate;
+    private Date moveOutDate;
 
     private byte[] photo;
 
