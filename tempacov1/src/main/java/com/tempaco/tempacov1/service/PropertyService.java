@@ -8,6 +8,7 @@ import com.tempaco.tempacov1.repository.PropertyRepository;
 import com.tempaco.tempacov1.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PropertyService {
@@ -57,5 +58,29 @@ public class PropertyService {
         ,property.getAddress(),property.getZip(),property.getPrice(),property.getBed(),property.getBath(),property.getMoveInDate(),
                 property.getMoveOutDate(),property.getPhoto())).toList();
 
+    }
+
+    public boolean updateProperty(PropertyDto propertyDto,Long id) throws IOException {
+        Property property=propertyRepository.findById(propertyDto.getId()).orElseThrow(()->new RuntimeException("Property not found"));
+
+        if(id.equals( property.getUser().getId())) {
+            property.setBed(propertyDto.getBed());
+            property.setAddress(propertyDto.getAddress());
+            property.setBath(propertyDto.getBath());
+            property.setPrice(propertyDto.getPrice());
+            property.setTitle(propertyDto.getTitle());
+            property.setDescription(propertyDto.getDescription());
+            property.setMoveInDate(propertyDto.getMoveInDate());
+            property.setMoveOutDate(propertyDto.getMoveOutDate());
+            property.setZip(propertyDto.getZip());
+            property.setPhoto(propertyDto.getPhoto().getBytes());
+
+            propertyRepository.save(property);
+            return true;
+        }else{
+            log.error("property not belong to user");
+            return false;
+
+        }
     }
 }

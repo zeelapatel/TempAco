@@ -106,6 +106,18 @@ public class PropertyController {
     private final PropertyService propertyService;
     private final UserService userService;
 
+    private Optional<User> getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return Optional.empty();
+        }
+        String userEmail = authentication.getName();
+        Optional<User> userEntityOptional = userService.getUserByEmail(userEmail);
+        return userEntityOptional;
+    }
+
+
+
     @PostMapping("/addProperty")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> uploadProperty(@ModelAttribute PropertyDto propertyDto) throws IOException {
@@ -170,20 +182,27 @@ public class PropertyController {
             @RequestParam(required = false) Date moveInDate,
             @RequestParam(required = false) Date moveOutDate) {
 
-
         List<GetPropertyDto> getPropertyDto = propertyService.getListing(price,bed,bath,moveInDate,moveOutDate);
-
 
         return ResponseEntity.ok(getPropertyDto);
     }
 
-    private Optional<User> getAuthenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return Optional.empty();
+    @PutMapping("/updateProperty")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> updateProperty(@ModelAttribute PropertyDto propertyDto) throws IOException {
+
+        Optional<User> userOptional = getAuthenticatedUser();
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        String userEmail = authentication.getName();
-        return userService.getUserByEmail(userEmail);
+        User user = userOptional.get();
+
+        var response = propertyService.updateProperty(propertyDto,user.getId());
+        if(response){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        }else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
 
