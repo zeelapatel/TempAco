@@ -11,6 +11,7 @@ import java.util.Date;
 @Data
 @Getter
 @Setter
+@Builder
 public class PropertyDto {
     private long id;
     private String title;
