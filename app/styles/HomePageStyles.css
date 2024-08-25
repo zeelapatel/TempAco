@@ -1,0 +1,66 @@
+/* HomePage.css */
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #d9d9d9;
+  }
+  
+  .navbar .auth-buttons button {
+    margin-left: 10px;
+  }
+  
+  .navbar .user-info {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .navbar .user-info span {
+    margin-right: 15px;
+  }
+  
+  /* Property Listing Section */
+  .property-listing {
+    padding: 20px;
+    background-color: #fafafa;
+  }
+  
+  .property-listing .ant-row {
+    margin: 0;
+  }
+  
+  .property-listing .ant-col {
+    padding: 10px;
+  }
+  
+  .property-listing .ant-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .property-listing .ant-card-cover img {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .property-listing .ant-card-meta-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .property-listing .ant-card-meta-description {
+    font-size: 16px;
+    color: #8c8c8c;
+  }
+  
+  .property-listing p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #595959;
+  }
+  
