@@ -24,7 +24,6 @@ const AddProperty = () => {
     formData.append("moveInDate", values.moveInDate.format("YYYY-MM-DD"));
     formData.append("moveOutDate", values.moveOutDate.format("YYYY-MM-DD"));
     if (file) {
-      console.log("hello world");
       formData.append("photo", file);
     }
     // Append file to formData
@@ -42,7 +41,6 @@ const AddProperty = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`, // Attach the token for authorization
         },
       });
-      console.log(localStorage.getItem("token"));
       if (response.status === 200) {
         message.success("Property added successfully!");
         navigate("/"); // Navigate to another page, like the home page or property list
