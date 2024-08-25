@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/RegiserStyles.css";
+import "../../styles/LoginStyles.css";
 import { Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,13 +8,18 @@ const Login = () => {
   const navigate = useNavigate();
   const onfinishHandler = async (values) => {
     try {
-      const res = await axios.post("/api/v1/user/login", values);
-      if (res.data.success) {
+      const res = await axios.post("http://localhost:8080/api/v1/signin", values);
+      console.log(res)
+      if (res.status === 200 && res.data.token) {
+        // Store token in localStorage
         localStorage.setItem("token", res.data.token);
         message.success("Login Successfully");
+
         navigate("/");
       } else {
-        message.error(res.data.message);
+        // If login fails
+        console.log("Login Failure");
+        message.error(res.data.message || "Login Failed");
       }
     } catch (error) {
       console.log(error);
