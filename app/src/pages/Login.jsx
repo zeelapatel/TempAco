@@ -13,9 +13,12 @@ const Login = () => {
       if (res.status === 200 && res.data.token) {
         // Store token in localStorage
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("firstName", res.data.firstName);
+        localStorage.setItem("lastName", res.data.lastName);
+        localStorage.setItem("email", res.data.email);
         message.success("Login Successfully");
 
-        navigate("/addProperty");
+        navigate("/");
       } else {
         // If login fails
         console.log("Login Failure");
