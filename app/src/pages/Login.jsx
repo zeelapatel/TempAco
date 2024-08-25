@@ -15,7 +15,7 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         message.success("Login Successfully");
 
-        navigate("/");
+        navigate("/addProperty");
       } else {
         // If login fails
         console.log("Login Failure");
