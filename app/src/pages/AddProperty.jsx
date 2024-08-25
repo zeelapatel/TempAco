@@ -8,11 +8,12 @@ import "../../styles/AddPropertyStyles.css";
 const AddProperty = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
     const formData = new FormData();
-    // Append form fields to formData
+
     formData.append("title", values.title);
     formData.append("description", values.description);
     formData.append("address", values.address);
@@ -20,9 +21,12 @@ const AddProperty = () => {
     formData.append("price", values.price);
     formData.append("bed", values.bed);
     formData.append("bath", values.bath);
-    formData.append("moveInDate", moment(values.moveInDate).format('YYYY-MM-DD'));
-    formData.append("moveOutDate", moment(values.moveOutDate).format('YYYY-MM-DD'));
-
+    formData.append("moveInDate", values.moveInDate.format("YYYY-MM-DD"));
+    formData.append("moveOutDate", values.moveOutDate.format("YYYY-MM-DD"));
+    if (file) {
+      console.log("hello world");
+      formData.append("photo", file);
+    }
     // Append file to formData
     if (values.photo) {
       formData.append("photo", values.photo.file.originFileObj);
@@ -103,11 +107,16 @@ const AddProperty = () => {
         </Form.Item>
 
         <Form.Item label="Property Photo" name="photo" rules={[{ required: true, message: "Please upload a photo of the property" }]}>
-          <Upload name="photo" listType="picture" maxCount={1} beforeUpload={() => false}>
+          <Upload 
+            listType="picture" 
+            maxCount={1}
+            beforeUpload={(file) => {
+              setFile(file);
+              return false;  // Prevent automatic upload
+            }}>
             <Button icon={<UploadOutlined />}>Click to Upload</Button>
           </Upload>
         </Form.Item>
-
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
             Add Property
