@@ -1,4 +1,15 @@
-/* HomePage.css */
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
 /* Navigation Bar */
 .navbar {
@@ -6,62 +17,134 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #f0f0f0;
+    background-color: #30d1d9;
     border-bottom: 1px solid #d9d9d9;
-  }
-  
-  .navbar .auth-buttons button {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    margin-left: auto;
+}
+
+.navbar .auth-buttons button {
     margin-left: 10px;
-  }
-  
-  .navbar .user-info {
+}
+
+.navbar .user-info {
+    display: flex;
     font-size: 16px;
     color: black;
     font-weight: bold;
-  }
-  
-  .navbar .user-info span {
+}
+
+.navbar .user-info span {
     margin-right: 15px;
-  }
-  
-  /* Property Listing Section */
-  .property-listing {
+}
+
+/* Property Listing Section */
+.property-listing {
     padding: 20px;
     background-color: #fafafa;
-  }
-  
-  .property-listing .ant-row {
+    flex-grow: 1;
+    min-height: 100%; /* Set minimum height to 100% of the viewport height */
+    min-width: 100%;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.property-listing .ant-row {
     margin: 0;
-  }
-  
-  .property-listing .ant-col {
+    min-height: 100%; /* Set minimum height to 100% of the viewport height */
+    min-width: 100%;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.property-listing .ant-col {
     padding: 10px;
-  }
-  
-  .property-listing .ant-card {
+    min-width: 300px;
+    min-height: 320px;
+}
+
+.property-listing .ant-card {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .property-listing .ant-card-cover img {
+    min-width: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.property-listing .ant-card-cover img {
     height: 200px;
     object-fit: cover;
-  }
-  
-  .property-listing .ant-card-meta-title {
+}
+
+.property-listing .ant-card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.property-listing .ant-card-meta-title {
     font-size: 18px;
     font-weight: bold;
-  }
-  
-  .property-listing .ant-card-meta-description {
+}
+
+.property-listing .ant-card-meta-description {
     font-size: 16px;
     color: #8c8c8c;
-  }
-  
-  .property-listing p {
+}
+
+.property-listing p {
     margin: 5px 0;
     font-size: 14px;
     color: #595959;
-  }
-  
+}
+
+/* Ensure grid has a consistent size, even with fewer properties */
+.property-listing .ant-row::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* Pagination */
+.pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #f0f0f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .property-listing .ant-col {
+        min-width: 100%;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .auth-buttons {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+}
