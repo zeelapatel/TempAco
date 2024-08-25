@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig  {
 
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	private final UserService userService;
@@ -58,6 +59,7 @@ public class SecurityConfig {
 										"/images/**")
 								.permitAll() // Allow access to static resources
 								.requestMatchers("/users/me").permitAll()
+								.requestMatchers("/api/v1/property/listing").permitAll()
 								.requestMatchers("/api/v1/signin").permitAll()
 								.anyRequest().authenticated())
 				.authenticationProvider(authenticationProvider())

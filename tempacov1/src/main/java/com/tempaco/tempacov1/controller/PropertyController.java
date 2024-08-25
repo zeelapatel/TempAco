@@ -184,7 +184,6 @@ public class PropertyController {
     }
 
     @GetMapping("/listing")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> listing(
             @RequestParam(required = false) Double price,
             @RequestParam(required = false) Integer bed,
