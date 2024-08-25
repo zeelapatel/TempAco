@@ -60,7 +60,7 @@ const HomePage = () => {
           {!user ? (
             <>
               <Button type="primary" onClick={() => navigate('/login')}>Login</Button>
-              <Button type="primary" onClick={() => navigate('/signup')}>Signup</Button>
+              <Button type="primary" onClick={() => navigate('/register')}>Signup</Button>
             </>
           ) : (
             <div className="user-info">
