@@ -9,7 +9,7 @@ const Register = () => {
   //form handler
   const onfinishHandler = async (values) => {
     try {
-      const res = await axios.post("http://localhost:8080/api/v1/signup", values);
+      const res = await axios.post("http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/signup", values);
       console.log(res);
       if (res.data.token && res.status == 200) {
         console.log("Register success");

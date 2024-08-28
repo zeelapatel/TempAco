@@ -20,7 +20,7 @@ const HomePage = () => {
     }
 
     // Fetch property listings
-    axios.get('http://localhost:8080/api/v1/property/listing')
+    axios.get('http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/property/listing')
     .then(response => {
       setProperties(response.data);
     })
@@ -31,7 +31,7 @@ const HomePage = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/logout', {}, {
+      const response = await axios.post('http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/logout', {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
@@ -49,6 +49,10 @@ const HomePage = () => {
       console.error("There was an error logging out:", error);
     }
   };
+  
+  const handleAddProperty = () => {
+    navigate('/addProperty');
+  };
 
   // Handle page change
   const handlePageChange = (page) => {
@@ -61,7 +65,7 @@ const HomePage = () => {
   const currentProperties = properties.slice(indexOfFirstProperty, indexOfLastProperty);
 
   return (
-    <div class="home-page">
+    <div>
       {/* Navigation Bar */}
       <div className="navbar">
         <div className="auth-buttons">
@@ -75,6 +79,7 @@ const HomePage = () => {
           ) : (
             <div className="user-info">
               <span>Welcome, {user.name}</span>
+              <Button onClick={handleAddProperty}>Add Property</Button>
               <Button onClick={handleLogout}>Sign Out</Button>
               <Button  >Profile</Button>
             

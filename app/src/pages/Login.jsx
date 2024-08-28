@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const onfinishHandler = async (values) => {
     try {
-      const res = await axios.post("http://localhost:8080/api/v1/signin", values);
+      const res = await axios.post("http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/signin", values);
       console.log(res)
       if (res.status === 200 && res.data.token) {
         // Store token in localStorage
