@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class JwtService {
 
 	public String extractUserName(String token) {
 		return extractClaim(token, Claims::getSubject);
+	}
+
+	@PostConstruct
+	public void init() {
+		System.out.println("JWT Expiration Time: " + jwtExpirationMs);
 	}
 
 	public String generateToken(UserDetails userDetails) {
