@@ -34,7 +34,7 @@ const AddProperty = () => {
     try {
       setLoading(true);
       
-      const response = await axios.post("http://localhost:8080/api/v1/property/addProperty", formData, {
+      const response = await axios.post("http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/property/addProperty", formData, {
         
         headers: {
           "Content-Type": "multipart/form-data",
