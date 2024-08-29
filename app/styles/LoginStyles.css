@@ -49,7 +49,11 @@
     background-color: #007bff;
     color: white;
   }
-  
+  .home-btn{
+    margin-top: 20px;
+    color: #ffffff;
+    text-decoration: none;
+  }
   .btn-primary:hover {
     background-color: #0056b3;
   }
