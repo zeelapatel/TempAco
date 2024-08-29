@@ -9,8 +9,10 @@ const Register = () => {
   //form handler
   const onfinishHandler = async (values) => {
     try {
-      const res = await axios.post("/api/v1/user/register", values);
-      if (res.data.success) {
+      const res = await axios.post("http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/signup", values);
+      console.log(res);
+      if (res.data.token && res.status == 200) {
+        console.log("Register success");
         message.success("Register Successfully!");
         navigate("/login");
       } else {
@@ -30,7 +32,10 @@ const Register = () => {
           className="register-form"
         >
           <h3 className="text-center">Register From</h3>
-          <Form.Item label="Name" name="name">
+          <Form.Item label="First Name" name="firstName">
+            <Input type="text" required />
+          </Form.Item>
+          <Form.Item label="Last Name" name="lastName">
             <Input type="text" required />
           </Form.Item>
           <Form.Item label="Email" name="email">

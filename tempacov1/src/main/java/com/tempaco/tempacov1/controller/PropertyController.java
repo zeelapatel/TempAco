@@ -5,6 +5,8 @@ import com.tempaco.tempacov1.dto.PropertyDto;
 import com.tempaco.tempacov1.dto.SavePropertyResult;
 import com.tempaco.tempacov1.model.User;
 import com.tempaco.tempacov1.model.Property;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
 
 import com.tempaco.tempacov1.service.PropertyService;
 import com.tempaco.tempacov1.service.UserService;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -106,6 +109,13 @@ public class PropertyController {
     private final PropertyService propertyService;
     private final UserService userService;
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    }
+
     private Optional<User> getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -174,7 +184,6 @@ public class PropertyController {
     }
 
     @GetMapping("/listing")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> listing(
             @RequestParam(required = false) Double price,
             @RequestParam(required = false) Integer bed,
