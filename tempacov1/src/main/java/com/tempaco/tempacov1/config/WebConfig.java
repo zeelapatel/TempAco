@@ -16,6 +16,7 @@ public class WebConfig {
                 registry.addMapping("/**")
                         .allowedOrigins("file:///C:/Users/saiar/Desktop/demo1.html")
                         .allowedOrigins("http://localhost:5173")
+                        .allowedOrigins("http://tempaco-frontend-react-app.s3-website.eu-north-1.amazonaws.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
