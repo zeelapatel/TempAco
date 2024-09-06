@@ -23,6 +23,7 @@ const AddProperty = () => {
     formData.append("bath", values.bath);
     formData.append("moveInDate", values.moveInDate.format("YYYY-MM-DD"));
     formData.append("moveOutDate", values.moveOutDate.format("YYYY-MM-DD"));
+    console.log(formData.moveInDate);
     if (file) {
       formData.append("photo", file);
     }
