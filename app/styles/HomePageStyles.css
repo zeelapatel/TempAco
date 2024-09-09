@@ -52,13 +52,13 @@ body, html {
     background-color: #fafafa;
     flex-grow: 1;
     min-height: 100%; /* Set minimum height to 100% of the viewport height */
-    min-width: 100%;
+    min-width: 80%;
     width: 100%;
-    max-width: 1200px;
+    max-width: 2000px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     overflow-y: auto;
     box-sizing: border-box;
 }
@@ -85,6 +85,7 @@ body, html {
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .property-listing .ant-card-cover img {

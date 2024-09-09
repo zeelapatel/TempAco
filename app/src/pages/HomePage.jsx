@@ -3,6 +3,7 @@ import { Button, Card, Col, Row, Pagination, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../../styles/HomePageStyles.css";
+import PropertyGrid from './PropertyGrid';
 
 // Utility function for fetching properties
 const fetchProperties = async (setProperties, setLoading) => {
@@ -116,26 +117,5 @@ const Navbar = React.memo(({ user, onLogout, onAddProperty }) => {
   );
 });
 
-// PropertyGrid Component
-const PropertyGrid = React.memo(({ properties }) => (
-  <Row gutter={[16, 16]}>
-    {properties.map(property => (
-      <Col span={8} key={property.id}>
-        <Card
-          hoverable
-          cover={<img alt={property.title} src={`data:image/jpeg;base64,${property.photo}`} />}
-        >
-          <Card.Meta 
-            title={property.title} 
-            description={`$${property.price} - ${property.bed} bed(s), ${property.bath} bath(s)`} 
-          />
-          <p>{property.address}</p>
-          <p>Move In: {new Date(property.moveInDate).toLocaleDateString()}</p>
-          <p>Move Out: {new Date(property.moveOutDate).toLocaleDateString()}</p>
-        </Card>
-      </Col>
-    ))}
-  </Row>
-));
 
 export default HomePage;
