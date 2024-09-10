@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Col, Row } from 'antd';
 
 const PropertyGrid = React.memo(({ properties }) => {
-  const pageSize = 16; // Total cards needed for 4x4 grid
+  const pageSize = 12; // Total cards needed for 4x4 grid
   const numEmptyCards = pageSize - properties.length;
 
   // Add empty cards to fill the grid
