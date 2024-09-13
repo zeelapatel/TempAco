@@ -1,0 +1,38 @@
+.dots-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .dot:hover {
+    background-color: #777;
+  }
+  
+  .dot.active {
+    background-color: #1890ff; /* Active dot color */
+  }
+  .listing-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    /* color: #333; Adjust the color as needed */
+    color: #ffffff; /* Bright white for maximum contrast */
+    text-shadow: 
+      1px 1px 1px rgba(0, 0, 0, 0.8), /* Strong shadow for depth */
+      0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow effect */
+    font-weight: bold; /* Make the text bolder */
+    letter-spacing: 1px; /* Slightly increase letter  */
+}
+    

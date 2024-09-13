@@ -1,0 +1,61 @@
+/* HomePageBackgroundImage.css */
+.hero-image {
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(30, 27, 27, 0.5);
+    z-index: 1;
+  }
+  
+  .hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    color: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 20px;
+  }
+  .text {
+    color: #ffffff; /* Bright white for maximum contrast */
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.8), /* Strong shadow for depth */
+      0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow effect */
+    font-weight: bold; /* Make the text bolder */
+    letter-spacing: 1px; /* Slightly increase letter spacing for better readability */
+  }
+
+  .hero-content h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+  }
+  
+  .search-bar {
+    width: 100%;
+    
+  }
+  
+  /* Customize the search bar appearance */
+  .search-bar .ant-input {
+    height: 50px;
+    font-size: 18px;
+  }
+  
+  .search-bar .ant-input-search-button {
+    height: 50px;
+    width: 60px;
+  }
