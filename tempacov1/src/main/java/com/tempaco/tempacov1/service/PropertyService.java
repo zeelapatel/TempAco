@@ -2,6 +2,7 @@ package com.tempaco.tempacov1.service;
 
 import com.tempaco.tempacov1.dto.GetPropertyDto;
 import com.tempaco.tempacov1.dto.PropertyDto;
+import com.tempaco.tempacov1.dto.PropertySpecifications;
 import com.tempaco.tempacov1.model.Property;
 import com.tempaco.tempacov1.model.User;
 import com.tempaco.tempacov1.repository.PropertyRepository;
@@ -10,6 +11,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -24,6 +27,7 @@ public class PropertyService {
 
     private final  PropertyRepository propertyRepository;
     private final UserRepository userRepository;
+    private final ServerProperties serverProperties;
 
     // get all property of one user
 
@@ -82,5 +86,21 @@ public class PropertyService {
             return false;
 
         }
+    }
+
+
+
+    public List<Property> searchProperties(String location, Double minPrice, Double maxPrice, Integer bed, Double bath, Date moveInDate, Date moveOutDate) {
+        Specification<Property> spec = Specification.where(null);
+
+        spec = spec.and(PropertySpecifications.hasLocation(location))
+                .and(PropertySpecifications.hasMinPrice(minPrice))
+                .and(PropertySpecifications.hasMaxPrice(maxPrice))
+                .and(PropertySpecifications.hasBed(bed))
+                .and(PropertySpecifications.hasBath(bath))
+                .and(PropertySpecifications.hasMoveInDate(moveInDate))
+                .and(PropertySpecifications.hasMoveOutDate(moveOutDate));
+
+        return propertyRepository.findAll(spec);
     }
 }
