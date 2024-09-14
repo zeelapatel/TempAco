@@ -32,8 +32,11 @@ const ProfilePage = () => {
 
   // Update user information
   const handleUpdate = async (values) => {
-    try {
-      const response = await axios.put('/users/updateUserInfo', values, {
+    
+      if (values.email === "demo1234@example.com"){
+        message.error("Cannot update Demo User")
+      }else{try {
+      const response = await axios.put('http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/users/updateUserInfo', values, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setUser(response.data);
@@ -42,7 +45,7 @@ const ProfilePage = () => {
     } catch (error) {
       console.error('Error updating user data:', error);
       message.error('Failed to update user information.');
-    }
+    }}
   };
 
   if (loading) {
