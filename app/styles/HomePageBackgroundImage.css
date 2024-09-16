@@ -43,16 +43,32 @@
 .hero-content h1 {
     font-size: 3em;
     margin-bottom: 1em;
-}
+    color: white;
+    text-shadow :3px 3px rgb(0, 0, 0);
 
+}
+.search-field {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    
+}
+.text-container {
+width: 150px;
+}
+.date-picker{
+    width: 204px;
+}
 
 /* Layout for the search parameters */
 .search-parameters {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* Reduced spacing for a more compact layout */
-    justify-content: flex-start;
+    flex-wrap:wrap;
+    gap: 5px; /* Reduced spacing for a more compact layout */
+    justify-content: center;
     margin-top: 10px; /* Reduced top margin */
+    width: 1700px;
 }
 
 .search-bar {
@@ -63,27 +79,30 @@
     margin-bottom: 3px; /* Less space between label and input */
     color: rgb(255, 255, 255); /* Label text color */
     font-weight: 500; /* Use a slightly less bold font */
-    font-size: 19px;
+    font-size: 15px;
      /* Smaller font size for labels */
     
     }
 .search-bar {
     flex: 1 1 180px; /* Make each search field smaller */
     max-width: 220px; /* Reduce max width for a smaller box */
-    
+
 }
 .search-btn{
-    width: 100%;
     background-color: #ffffff;
     color: black;
     border-color: #4CAF50;
     font-size: 16px;
     font-weight: bold;
-    padding: 10px;
+    
     border-radius: 4px;
     
     margin:26px;
     transition: background-color 0.3s, border-color 0.3s;
+}
+.search-parameters{
+display: flex;
+width: 1000px;
 }
 .search-btn:hover{
 background-color: black;
