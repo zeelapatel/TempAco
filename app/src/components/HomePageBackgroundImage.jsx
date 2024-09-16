@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Typography, Input, Button } from 'antd';
+import { Typography, Input, Button, DatePicker } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/HomePageBackgroundImage.css';
-import homePageBackground from '../images/home_page_back.jpg';
+import moment from 'moment';
+import homePageBackground from '../images/guillaume-bolduc-uZc-QuBvjmU-unsplash.jpg';
 
 const { Title, Text } = Typography;
 
@@ -13,7 +14,7 @@ const HeroImage = () => {
   const [maxPrice, setMaxPrice] = useState('');
   const [bed, setBed] = useState('');
   const [bath, setBath] = useState('');
-
+  const[moveInDate,setMoveInDate] = useState(null);
   const navigate = useNavigate();
 
   const onSearch = () => {
@@ -23,6 +24,7 @@ const HeroImage = () => {
       maxPrice,
       bed,
       bath,
+      moveInDate: moveInDate? moveInDate.format("YYYY-MM-DD"):''
     }).toString();
 
     navigate(`/searchResults?${searchParams}`);
@@ -35,7 +37,9 @@ const HeroImage = () => {
         <div className="search-parameters">
           {/* Location Input */}
           <div className="search-field">
-            <Text className="search-label">Location</Text>
+          <div className= "text-container">
+            <Text className="search-label">City</Text>
+            </div>
             <Input
               placeholder="Location"
               value={location}
@@ -45,7 +49,10 @@ const HeroImage = () => {
           </div>
           {/* Min Price Input */}
           <div className="search-field">
+          <div className= "text-container">
             <Text className="search-label">Min Price</Text>
+            </div>
+            <div>
             <Input
               placeholder="Min Price"
               type="number"
@@ -53,10 +60,13 @@ const HeroImage = () => {
               onChange={(e) => setMinPrice(e.target.value)}
               className="search-bar"
             />
+            </div>
           </div>
           {/* Max Price Input */}
           <div className="search-field">
+          <div className= "text-container">
             <Text className="search-label">Max Price</Text>
+            </div>
             <Input
               placeholder="Max Price"
               type="number"
@@ -67,7 +77,9 @@ const HeroImage = () => {
           </div>
           {/* Bedrooms Input */}
           <div className="search-field">
+          <div className= "text-container">
             <Text className="search-label">Bedrooms</Text>
+            </div>
             <Input
               placeholder="Bedrooms"
               value={bed}
@@ -77,7 +89,9 @@ const HeroImage = () => {
           </div>
           {/* Bathrooms Input */}
           <div className="search-field">
+          <div className= "text-container">
             <Text className="search-label">Bathrooms</Text>
+            </div>
             <Input
               placeholder="Bathrooms"
               value={bath}
@@ -85,21 +99,31 @@ const HeroImage = () => {
               className="search-bar"
             />
           </div>
-          {/* Property Type Input */}
+          
+          <div className="search-field">
+          <div className= "text-container">
+            <Text className="search-label">Move In Date</Text>
+            </div>
+            <DatePicker
+              placeholder="Date"
+              value={moveInDate}
+              onChange={(date) => setMoveInDate(date)}
+              className="date-picker"
+            />
+          </div>
+          
           
           {/* Search Button */}
-          <div className="search-field">
-            <Button className="search-btn"
-            //   type="primary"
+          
+          
+        </div>
+        <Button className="search-btn"
               icon={<SearchOutlined />}
               size="large"
               onClick={onSearch}
-            //   className="search-bar"
             >
               Search
             </Button>
-          </div>
-        </div>
       </div>
     </div>
   );
