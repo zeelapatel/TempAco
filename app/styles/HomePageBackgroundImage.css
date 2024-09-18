@@ -1,0 +1,166 @@
+/* HomePageBackgroundImage.css */
+.hero-image {
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    color: white;
+    width: 100%;
+    max-width: 1000px; /* Adjusted for more width to accommodate more input fields */
+    padding: 0 20px;
+}
+
+.text {
+    color: #ffffff; /* Bright white for maximum contrast */
+    text-shadow: 
+        1px 1px 2px rgba(235, 227, 227, 0.8), /* Strong shadow for depth */
+        0 0 10px rgba(201, 188, 188, 0.5); /* Subtle glow effect */
+    font-weight: bold; /* Make the text bolder */
+    letter-spacing: 1px; /* Slightly increase letter spacing for better readability */
+}
+
+.hero-content h1 {
+    font-size: 3em;
+    margin-bottom: 1em;
+    color: white;
+    text-shadow :3px 3px rgb(0, 0, 0);
+
+}
+.search-field {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    
+}
+.text-container {
+width: 150px;
+}
+.date-picker{
+    width: 204px;
+}
+
+/* Layout for the search parameters */
+.search-parameters {
+    display: flex;
+    flex-wrap:wrap;
+    gap: 5px; /* Reduced spacing for a more compact layout */
+    justify-content: center;
+    margin-top: 10px; /* Reduced top margin */
+    width: 1700px;
+}
+
+.search-bar {
+    flex: 1 1 200px; /* Make each search field flexible */
+    max-width: 250px; /* Set a maximum width for each field */
+}
+.search-label {
+    margin-bottom: 3px; /* Less space between label and input */
+    color: rgb(255, 255, 255); /* Label text color */
+    font-weight: 500; /* Use a slightly less bold font */
+    font-size: 15px;
+     /* Smaller font size for labels */
+    
+    }
+.search-bar {
+    flex: 1 1 180px; /* Make each search field smaller */
+    max-width: 220px; /* Reduce max width for a smaller box */
+
+}
+.search-btn{
+    background-color: #ffffff;
+    color: black;
+    border-color: #4CAF50;
+    font-size: 16px;
+    font-weight: bold;
+    
+    border-radius: 4px;
+    
+    margin:26px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.search-parameters{
+display: flex;
+width: 1000px;
+}
+.search-btn:hover{
+background-color: black;
+color: #ffffff;
+}
+/* Customize the input and select elements */
+.search-bar .ant-input,
+.search-bar .ant-select-selector,
+.search-bar .ant-btn {
+    height: 40px; /* Reduce the height */
+    font-size: 14px; /* Smaller font size */
+}
+/* Customize the button appearance */
+.search-bar .ant-btn {
+    min-width: 100px; /* Minimum width for the search button */
+}
+
+/* Add this to your existing CSS */
+
+/* Style for input placeholders */
+.search-bar .ant-input::placeholder,
+.search-bar .ant-select-selection-placeholder {
+    color: rgba(0, 0, 0, 0.85) !important; /* Bright black color */
+    opacity: 1; /* Full opacity */
+}
+
+/* Style for select placeholder */
+.search-bar .ant-select-selection-placeholder {
+    color: rgba(0, 0, 0, 0.85) !important; /* Bright black color */
+}
+
+/* Ensure text color is also black when typing */
+.search-bar .ant-input,
+.search-bar .ant-select-selection-item {
+    color: black !important;
+}
+
+/* Style for the dropdown options */
+.ant-select-dropdown .ant-select-item-option-content {
+    color: black !important;
+}
+
+/* Adjust the background of input and select fields for better contrast */
+.search-bar .ant-input,
+.search-bar .ant-select-selector {
+    background-color: rgba(255, 255, 255, 0.9) !important; /* Slightly transparent white background */
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+
+    .search-bar {
+        max-width: 100%; /* Full width on smaller screens */
+    }
+
+    .search-parameters {
+        gap: 5px; /* Reduce spacing between fields on smaller screens */
+    }
+}

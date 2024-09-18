@@ -50,7 +50,9 @@ const Login = () => {
         <button className="btn btn-primary" type="submit">
           Login
         </button>
+        
       </Form>
+      <button onClick={()=>navigate("/")} className="btn home-btn">Home</button>
     </div>
   );
 };

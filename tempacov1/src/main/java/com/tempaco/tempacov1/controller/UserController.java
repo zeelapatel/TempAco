@@ -81,6 +81,7 @@ public class UserController {
 			if (userEntity.isPresent()) {
 				UserResponseDto userResponseDto = mapToUserResponseDto(userEntity.get());
 				return ResponseEntity.ok(userResponseDto);
+				
 			} else {
 				return ResponseEntity.notFound().build(); // Or return an appropriate error response
 			}

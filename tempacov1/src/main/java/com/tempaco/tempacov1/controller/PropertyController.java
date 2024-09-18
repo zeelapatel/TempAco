@@ -6,6 +6,7 @@ import com.tempaco.tempacov1.dto.SavePropertyResult;
 import com.tempaco.tempacov1.model.User;
 import com.tempaco.tempacov1.model.Property;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.WebDataBinder;
 
 import com.tempaco.tempacov1.service.PropertyService;
@@ -27,79 +28,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-//@Controller
-//@RequestMapping("/api/v1/property")
-//@RequiredArgsConstructor
-//public class PropertyController {
-//
-//    private final PropertyService propertyService;
-//    private final UserService userService;
-//
-//
-//
-//    @PostMapping("/upload")
-//    @PreAuthorize("hasRole('USER')")
-//    public ResponseEntity<?>  uploadProperty (@ModelAttribute PropertyDto propertyDto) throws IOException {
-//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//            if (authentication != null && authentication.isAuthenticated()) {
-//                String userEmail = authentication.getName();
-//
-//                Optional<User> userEntityOptional = userService.getUserByEmail(userEmail);
-//                if (userEntityOptional.isPresent()) {
-//                    User userEntity = userEntityOptional.get();
-//                    Long userId = userEntity.getId();
-//
-//                    var response = propertyService.save(propertyDto,userId);
-//
-//
-//                    SavePropertyResult result = SavePropertyResult.builder()
-//                            .error(false).zip(response.getZip()).title(response.getTitle())
-//                            .description(response.getDescription()).price(response.getPrice())
-//                            .address(response.getAddress())
-//                            .build();
-//                    return new ResponseEntity<>(result, HttpStatus.OK);
-//                }else{
-//                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//                }
-//            }else {
-//                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-//            }
-//    }
-//
-//
-//    @GetMapping("/getProperties")
-//    @PreAuthorize("hasRole('USER')")
-//    public ResponseEntity<?> getUserProperties() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication != null && authentication.isAuthenticated()) {
-//            String userEmail = authentication.getName();
-//
-//            Optional<User> userEntityOptional = userService.getUserByEmail(userEmail);
-//            if (userEntityOptional.isPresent()) {
-//                User userEntity = userEntityOptional.get();
-//                Long userId = userEntity.getId();
-//
-//                List<Property> properties = propertyService.getPropertiesByUserId(userId);
-//                List<GetPropertyDto> response = properties.stream().map(property -> new GetPropertyDto(
-//                        property.getId(),
-//                        property.getTitle(),
-//                        property.getDescription(),
-//                        property.getAddress(),
-//                        property.getZip(),
-//                        property.getPrice(),
-//                        property.getPhoto()
-//                )).collect(Collectors.toList());
-//
-//                return new ResponseEntity<>(response, HttpStatus.OK);
-//            } else {
-//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//            }
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-//        }
-//    }
-//
-//}
+
 
 @Controller
 @RequestMapping("/api/v1/property")
@@ -113,7 +42,7 @@ public class PropertyController {
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
     private Optional<User> getAuthenticatedUser() {
@@ -196,6 +125,40 @@ public class PropertyController {
         return ResponseEntity.ok(getPropertyDto);
     }
 
+
+
+    @GetMapping("/search")
+    public ResponseEntity<List<GetPropertyDto>> searchProperties(
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Integer bed,
+            @RequestParam(required = false) Double bath,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date moveInDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date moveOutDate) {
+
+        List<Property> properties = propertyService.searchProperties(location, minPrice, maxPrice, bed, bath, moveInDate, moveOutDate);
+        List<GetPropertyDto> propertyDtos = properties.stream()
+                .map(property -> new GetPropertyDto(
+                        property.getId(),
+                        property.getTitle(),
+                        property.getDescription(),
+                        property.getAddress(),
+                        property.getZip(),
+                        property.getPrice(),
+                        property.getBed(),
+                        property.getBath(),
+                        property.getMoveInDate(),
+                        property.getMoveOutDate(),
+                        property.getPhoto()
+                ))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(propertyDtos);
+    }
+
+    
+    
     @PutMapping("/updateProperty")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> updateProperty(@ModelAttribute PropertyDto propertyDto) throws IOException {

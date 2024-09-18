@@ -1,40 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Row, Pagination } from 'antd';
+import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../../styles/HomePageStyles.css";
+import PropertyListing from '../components/PropertyListing';
+import logo from '../images/logo.png';
+import HomePageBackgroundImage from '../components/HomePageBackgroundImage';
+
+// Utility function for fetching properties
+const fetchProperties = async (setProperties, setLoading) => {
+  setLoading(true);
+  try {
+    const response = await axios.get('http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/property/listing');
+    setProperties(response.data);
+  } catch (error) {
+    console.error("There was an error fetching the property listings!", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
 const HomePage = () => {
   const [properties, setProperties] = useState([]);
   const [user, setUser] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(6); // Number of properties per page
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
+  // Handle user authentication and fetch properties
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Fetch user details from token
       const userData = localStorage.getItem('firstName');
       setUser({ name: userData });
     }
-
-    // Fetch property listings
-    axios.get('http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/property/listing')
-    .then(response => {
-      setProperties(response.data);
-    })
-    .catch(error => {
-      console.error("There was an error fetching the property listings!", error);
-    });
+    fetchProperties(setProperties, setLoading);
   }, []);
 
+  // Handle Logout
   const handleLogout = async () => {
     try {
       const response = await axios.post('http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/logout', {}, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        }
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
   
       if (response.status === 200) {
@@ -49,77 +55,68 @@ const HomePage = () => {
       console.error("There was an error logging out:", error);
     }
   };
+
+  const handleDemoLogin = async () => {
+    const demoCredentials = {
+      email: "demo1234@example.com",
+      password: "12345"
+    };
   
-  const handleAddProperty = () => {
-    navigate('/addProperty');
+    try {
+      const res = await axios.post("http://tempaco-v2-env.eba-axzkac2g.eu-north-1.elasticbeanstalk.com/api/v1/signin", demoCredentials);
+      
+      if (res.status === 200 && res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("firstName", res.data.firstName);
+        localStorage.setItem("lastName", res.data.lastName);
+        localStorage.setItem("email", res.data.email);
+        
+        setUser({ name: res.data.firstName });
+        navigate("/");
+      } else {
+        console.log("Demo Login Failure");
+      }
+    } catch (error) {
+      console.error("Error during demo login:", error);
+    }
   };
-
-  // Handle page change
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  // Calculate properties to display on the current page
-  const indexOfLastProperty = currentPage * pageSize;
-  const indexOfFirstProperty = indexOfLastProperty - pageSize;
-  const currentProperties = properties.slice(indexOfFirstProperty, indexOfLastProperty);
-
   return (
     <div>
-      {/* Navigation Bar */}
-      <div className="navbar">
-        <div className="auth-buttons">
-          {!user ? (
-            <>
-              <Button  type="primary" onClick={() => navigate('/login')}>Login</Button>
-              <Button type="primary" onClick={() => navigate('/register')}>Signup</Button>
-              
-            </>
-            
-          ) : (
-            <div className="user-info">
-              <span>Welcome, {user.name}</span>
-              <Button onClick={handleAddProperty}>Add Property</Button>
-              <Button onClick={handleLogout}>Sign Out</Button>
-              <Button  >Profile</Button>
-            
-            </div>
-          )}
-        </div>
-      </div>
-
+      <Navbar user={user} onLogout={handleLogout} onAddProperty={() => navigate('/addProperty')}onDemoLogin={handleDemoLogin} />
+      <HomePageBackgroundImage />
       {/* Property Listing */}
       <div className="property-listing">
-        <Row gutter={[16, 16]}>
-          {currentProperties.map(property => (
-            <Col span={8} key={property.id}>
-              <Card
-                hoverable
-                cover={<img alt={property.title} src={`data:image/jpeg;base64,${property.photo}`} />}
-              >
-                <Card.Meta 
-                  title={property.title} 
-                  description={`$${property.price} - ${property.bed} bed(s), ${property.bath} bath(s)`} 
-                />
-                <p>{property.address}</p>
-                <p>Move In: {new Date(property.moveInDate).toLocaleDateString()}</p>
-                <p>Move Out: {new Date(property.moveOutDate).toLocaleDateString()}</p>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        {/* Pagination Component */}
-        <Pagination 
-          current={currentPage} 
-          pageSize={pageSize} 
-          total={properties.length} 
-          onChange={handlePageChange} 
-          style={{ textAlign: 'center', marginTop: '20px' }}
-        />
+        <PropertyListing properties={properties} loading={loading} />
       </div>
     </div>
   );
-}
+};
 
+// Navbar Component
+const Navbar = React.memo(({ user, onLogout, onAddProperty, onDemoLogin }) => {
+  const navigate = useNavigate();
+  return (
+    <div className="navbar">
+      <div className="navbar-logo">
+        <img src={logo} alt="Logo" onClick={() => navigate('/')} />
+      </div>
+      <div className="auth-buttons">
+        {!user ? (
+          <>
+            <Button type="primary" onClick={() => navigate('/login')}>Login</Button>
+            <Button type="primary" onClick={onDemoLogin}>Demo Login</Button>
+            <Button type="primary" onClick={() => navigate('/register')}>Signup</Button>
+          </>
+        ) : (
+          <div className="user-info">
+            <span>Welcome, {user.name}</span>
+            <Button onClick={onAddProperty}>Add Property</Button>
+            <Button onClick={onLogout}>Sign Out</Button>
+            <Button onClick={() => navigate('/userProfile')}>Profile</Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+});
 export default HomePage;

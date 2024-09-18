@@ -14,17 +14,23 @@ body, html {
 /* Navigation Bar */
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 10px 20px;
-    background-color: #30d1d9;
+    background-color: #ffffff;
     border-bottom: 1px solid #d9d9d9;
-    max-width: 100%;
     width: 100%;
     box-sizing: border-box;
-    flex-shrink: 0;
+}
+.navbar-logo {
+    display: flex;
+    align-items: center;
 }
 
+.navbar-logo img {
+    height: 40px; /* Adjust as needed */
+    cursor: pointer;
+}
 .auth-buttons {
     display: flex;
     gap: 10px; /* Space between buttons */
@@ -40,6 +46,8 @@ body, html {
     font-size: 16px;
     color: black;
     font-weight: bold;
+    align-items: center;
+    margin-right: auto;
 }
 
 .navbar .user-info span {
@@ -52,13 +60,13 @@ body, html {
     background-color: #fafafa;
     flex-grow: 1;
     min-height: 100%; /* Set minimum height to 100% of the viewport height */
-    min-width: 100%;
+    min-width: 80%;
     width: 100%;
-    max-width: 1200px;
+    max-width: 2000px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     overflow-y: auto;
     box-sizing: border-box;
 }
@@ -85,6 +93,7 @@ body, html {
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .property-listing .ant-card-cover img {

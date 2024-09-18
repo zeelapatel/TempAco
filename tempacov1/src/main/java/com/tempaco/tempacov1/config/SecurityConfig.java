@@ -60,6 +60,7 @@ public class SecurityConfig  {
 								.permitAll() // Allow access to static resources
 								.requestMatchers("/users/me").permitAll()
 								.requestMatchers("/api/v1/property/listing").permitAll()
+								.requestMatchers("/api/v1/property/search").permitAll()
 								.requestMatchers("/api/v1/signin").permitAll()
 								.anyRequest().authenticated())
 				.authenticationProvider(authenticationProvider())

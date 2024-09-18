@@ -3,6 +3,9 @@ package com.tempaco.tempacov1.dto;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
+
 import java.util.Date;
 
 @AllArgsConstructor
