@@ -20,6 +20,7 @@ public class AuthController {
 
 	private final AuthenticationService authenticationService;
 
+	
 	@PostMapping("/signup")
 	public JwtAuthenticationResponse signup(@RequestBody SignUpRequest signUpRequest) {
 		return authenticationService.signup(signUpRequest);
